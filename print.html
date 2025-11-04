@@ -1,0 +1,1788 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>DAD User Manual</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="last-changed.css">
+        <link rel="stylesheet" href="././mdbook-admonish.css">
+        <link rel="stylesheet" href="./mdbook-admonish.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">DAD User Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/NDRN-DAD/DAD-Manual" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="background"><a class="header" href="#background">Background</a></h1>
+<p>The Disability Advocacy Database (<a href="https://dad.ndrn.org/">DAD</a>) is a web-based data collection and management system developed by the Protection and Advocacy Network specifically
+for P&amp;A/CAP programs. What started as a unified way to collect Program Performance Report (PPR) data has now evolved into an office wide tool that combines HR features
+such as time sheet management, and cost allocation tools for administrative and non-client specific advocacy efforts. DAD has also stayed true to its intent for creation of
+assisting P&amp;A/CAP programs with completing PPRs for federal grants and contracts and the templates in place now allow agencies to have responses to data requests at their fingertips. DAD is shared system based on a cost sharing model.</p>
+<p>NDRN has a DAD Committee that is made up representatives from across those agencies to serve as an advisory panel for all changes and assist with support of the system.</p>
+<p>NDRN has recently renewed its investment into the infrastructure of the DAD IT Services with offsite live mirroring and additional backup power solutions to support whatever natural or other disaster that may head to the DC area to keep your data available.</p>
+<p>Subscribing to the DAD system gives agency management peace of mind that: changes to federal forms, changes to guidelines for electronic storage of client data, and/or
+revisions to accessibility guidelines for web pages will not have an impact on the direct or indirect client services your agency provides. NDRN maintains those standards for
+the DAD system and implements changes as needed which are included with your subscription.</p>
+<p>Any agency interested in viewing a demo of the DAD system in its entirety (or just to view the HR features such as the time keeping aspect) should schedule a web-based presentation with Zach Martin (<a href="guide/MAILTO:zachary.martin@ndrn.org">zachary.martin@ndrn.org</a>).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="logging-into-dad"><a class="header" href="#logging-into-dad">Logging into DAD</a></h1>
+<p>Link to DAD login screen: <a href="https://dad.ndrn.org">https://dad.ndrn.org</a></p>
+<p><img src="login/images/logging-into-dad.png" alt="The DAD login screen. It has an &quot;advocacy group&quot; dropdown, &quot;username&quot; and &quot;password&quot; fields, and a &quot;login&quot; button." /></p>
+<p>The first time that you login to dad.ndrn.org the “Advocacy Group” will appear alphabetically. Once you choose your agency group, DAD will remember your group. Your DAD User Name and Password are assigned you by your DAD Administrator.</p>
+<ul>
+<li>User Name is NOT case sensitive</li>
+<li>Password is case sensitive</li>
+<li>Please <em><strong>DO NOT</strong></em> allow your computer to remember your password for security reasons</li>
+<li>Passwords can be changed at any time as needed. If your password security is compromised, stolen, etc. contact your DAD Administrator.</li>
+<li>After your information is entered into the fields, left click Log In or hit <code>enter</code>.</li>
+<li>Remember to log off at the end of each day by either closing or left clicking <code>Logout</code> from your control panel (explained on the next page).</li>
+</ul>
+<p>It is recommended that after you receive your original temporary password that you
+select “Change Password” to create your own personal password. If you forget your
+person password you administrator has the ability to issue you a temporary password.</p>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="login\index.html#admonition-note"></a>
+</div>
+<div>
+<p>DAD has multiple security level capabilities. Contact your DAD Administrator for
+details.</p>
+</div>
+</div>
+<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div class="admonition-title">
+<div id="admonition-info-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="login\index.html#admonition-info"></a>
+</div>
+<div>
+<p>DAD now uses two-factor authentication. See relevant section for rationale, tutorial, or support.</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="background-1"><a class="header" href="#background-1">Background</a></h1>
+<h2 id="context"><a class="header" href="#context">Context</a></h2>
+<p>When you sign into an online account, you show who you are (and so what information to show you) by entering two pieces of information: a username and a password. For various reasons<sup class="footnote-reference" id="fr-note-1"><a href="#footnote-note">1</a></sup>, using <em>only</em> a username and a password isn't secure enough for especially sensitive data.</p>
+<p>This is why high-security online accounts (e.g. banks, retirement accounts, online pay statements) include <em>additional</em> checks when trying to log in. For example, your bank might send you a text message or email containing a code, and then ask you to provide that code. What they are doing is having you provide a second "factor", or "thing that proves who you are". That service "uses two-factor authentication" ("2FA").</p>
+<h2 id="dad--2fa"><a class="header" href="#dad--2fa">DAD &amp; 2FA</a></h2>
+<p><a href="https://dad.ndrn.org/">DAD</a> has been updated to use two-factor authentication. Specifically: DAD uses codes produced by an "authenticator app".</p>
+<p>DAD users need to</p>
+<ol>
+<li>
+<p>install an authenticator</p>
+</li>
+<li>
+<p>tell the authenticator how to make codes for DAD by scanning a QR code <em><strong>or</strong></em> entering a password</p>
+</li>
+<li>
+<p>log in to DAD at least one time</p>
+</li>
+<li>
+<p>every 45 days or so, provide DAD a code from the authenticator</p>
+</li>
+</ol>
+<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div class="admonition-title">
+<div id="admonition-info-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa\index.html#admonition-info"></a>
+</div>
+<div>
+<p>Steps 1 &amp; 2 do not need to be done after initial setup. Once you've told the authenticator how to make the codes, it isn't going to forget and the codes are going to work fine. Just go in and get the current one if DAD asks for one.</p>
+</div>
+</div>
+<p>Later sections of this guide cover what to do.</p>
+<hr>
+<ol class="footnote-definition"><li id="footnote-note">
+<p>Usernames are easy to discover. Often they can be guessed. In organizations, they often follow a pattern, so if you discover one username, you can deduce all of the usernames. Passwords are hard to remember, so people tend to use simple ones and then also re-use them across sites and services. Passwords are useful, but they can be compromised or guessed. <a href="#fr-note-1">↩</a></p>
+</li>
+</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="how-do-i-set-it-up"><a class="header" href="#how-do-i-set-it-up">How do I set it up?</a></h1>
+<p>You'll need to pick a device to be your authenticator. You can use a smartphone or you can use any modern web browser on your computer. Decide whether you will be using your phone or your browser as your authenticator.</p>
+<div id="admonition-suggestion" class="admonition admonish-note" role="note" aria-labelledby="admonition-suggestion-title">
+<div class="admonition-title">
+<div id="admonition-suggestion-title">
+<p>Suggestion</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/setup\index.html#admonition-suggestion"></a>
+</div>
+<div>
+<p>NDRN recommends using a phone, but either will work.</p>
+</div>
+</div>
+<p>Follow the corresponding section's steps: <a href="login/2fa/setup/phone.html">Phone Authentication Setup</a> if using a phone or <a href="login/2fa/setup/browser.html">Browser Authentication Setup</a> if using a browser.</p>
+<p>The details vary, but the process each of the sections will have you follow is the same:</p>
+<ol>
+<li>
+<p>Install an authenticator (if you don't already have one).</p>
+</li>
+<li>
+<p>Attempt to log in to DAD using your username and password. DAD will present you with a QR code and a CHALLENGE PHRASE.</p>
+</li>
+<li>
+<p>In your authenticator, scan the QR code or enter the CHALLENGE PHRASE. This creates a DAD authenticator entry</p>
+</li>
+<li>
+<p>Enter a code from your new DAD authenticator entry into DAD to confirm that setup worked</p>
+</li>
+</ol>
+<div id="admonition-clarification" class="admonition admonish-info" role="note" aria-labelledby="admonition-clarification-title">
+<div class="admonition-title">
+<div id="admonition-clarification-title">
+<p>Clarification</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/setup\index.html#admonition-clarification"></a>
+</div>
+<div>
+<p>Much like a password, the codes your authenticator will make will work on any of your devices.</p>
+</div>
+</div>
+<div id="admonition-advanced-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-advanced-tip-title">
+<div class="admonition-title">
+<div id="admonition-advanced-tip-title">
+<p>Advanced Tip</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/setup\index.html#admonition-advanced-tip"></a>
+</div>
+<div>
+<p>If you want, you can set up DAD authenticator entries on as many devices as you want.</p>
+</div>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="phone-authentication-setup"><a class="header" href="#phone-authentication-setup">Phone Authentication Setup</a></h1>
+<h2 id="on-your-phone"><a class="header" href="#on-your-phone">On your phone...</a></h2>
+<h3 id="install-an-authenticator-app-on-your-phone"><a class="header" href="#install-an-authenticator-app-on-your-phone">Install an authenticator app on your phone</a></h3>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/setup/phone.html#admonition-note"></a>
+</div>
+<div>
+<p>This section contains screenshots. Each image shows how to do the step on iOS and on Android. The image on the left is iOS and the right is Android.</p>
+</div>
+</div>
+<h4 id="find-and-open-your-phones-app-store"><a class="header" href="#find-and-open-your-phones-app-store">Find and open your phone's app store</a></h4>
+<p>Your phone has an "app store". On android, the app store app is named “play store”. On ios, it is named “app store”. Open your app store.</p>
+<p><img src="login/2fa/setup/images/phone-1.png" alt="iOS and Android homescreen screenshots of app store button" /></p>
+<p><em>Find and open your phone's app store.</em></p>
+<h4 id="search-for-authenticator-pick-one-install-it"><a class="header" href="#search-for-authenticator-pick-one-install-it">Search for "authenticator", pick one, install it</a></h4>
+<p>In the search bar, search for “authenticator”. Select one from a major software publisher and install it.</p>
+<div id="admonition-suggestion" class="admonition admonish-note" role="note" aria-labelledby="admonition-suggestion-title">
+<div class="admonition-title">
+<div id="admonition-suggestion-title">
+<p>Suggestion</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/setup/phone.html#admonition-suggestion"></a>
+</div>
+<div>
+<p>NDRN suggests picking Google Authenticator. Microsoft Authenticator would work also.</p>
+</div>
+</div>
+<p><img src="login/2fa/setup/images/phone-3.png" alt="iOS and Android app store screenshots of searching for &quot;authenticator&quot; with Google and Microsoft&#39;s authenticators highlighted" /></p>
+<p><em>Pick one of the search results</em></p>
+<p>In the search result, select an authenticator to be taken to its info page. Select "get" or "install" to download it and wait for it to install.</p>
+<p>Once the authenticator installs, try running it. If you just installed your authenticator then it will have no entries yet. It should look something like this.</p>
+<p><img src="login/2fa/setup/images/example-auth.jpg" alt="Example screenshot of an authenticator containing a DAD entry" /></p>
+<p><em>Example screenshot of an authenticator containing a DAD entry (and also anonymized entries for other services)</em></p>
+<div id="admonition-warning" class="admonition admonish-warning" role="note" aria-labelledby="admonition-warning-title">
+<div class="admonition-title">
+<div id="admonition-warning-title">
+<p>Warning</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/setup/phone.html#admonition-warning"></a>
+</div>
+<div>
+<p>The above screenshot contains examples of authenticator codes. Your codes will be different. Use the codes generated for you by <em>your</em> authenticator.</p>
+</div>
+</div>
+<h2 id="on-your-computer"><a class="header" href="#on-your-computer">On your computer...</a></h2>
+<h3 id="attempt-to-log-in-to-dad"><a class="header" href="#attempt-to-log-in-to-dad">Attempt to log in to DAD</a></h3>
+<p>Attempt to log in to DAD. You should be on a screen titled "Configure Authenticator App". The page should have a QR code (a square barcode thing) on it and a CHALLENGE PHRASE (blue password-like text) above it.</p>
+<p><img src="login/2fa/setup/images/phone-6.png" alt="Example screenshot of the DAD &quot;2fa setup&quot; splash screen containing the two options for setup: a QR code and a password" /></p>
+<p><em>This screenshot is for illustration purposes. You will get your code from the DAD website. You will not get it from this image it is only an example.</em></p>
+<p>You will use the QR code or the password to teach the authenticator how to make the codes DAD wants.</p>
+<h2 id="on-your-phone-1"><a class="header" href="#on-your-phone-1">On your phone...</a></h2>
+<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div class="admonition-title">
+<div id="admonition-info-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/setup/phone.html#admonition-info"></a>
+</div>
+<div>
+<p>This section describes the "scan the QR code" approach to creating the entry. If you would like to instead use the CHALLENGE PHRASE method, see alternate instructions <a href="http://dadbooktest.nyuu.page/login/2fa/support.html#an-alternative-to-scanning-the-qr-code">here</a></p>
+</div>
+</div>
+<h3 id="use-the-authenticator-to-scan-the-qr-code"><a class="header" href="#use-the-authenticator-to-scan-the-qr-code">Use the authenticator to scan the QR code</a></h3>
+<p>In the authenticator app, tap the plus sign (+). Choose "Scan a QR code". This will launch a camera. Point it at the QR code shown in DAD. The authenticator camera should automatically take the information it needs, close the camera, and place you back at the authenticator's main screen with a new authenticator entry listed for DAD. Congratulations! You have set up your authenticator. Now all that's left is to use it.</p>
+<p><img src="login/2fa/setup/images/qr-scan.jpg" alt="An android phone in the google authenticator &quot;QR code scan&quot; interface, pointed at a QR code on a computer screen" /></p>
+<p><em>Point camera at the QR code in DAD</em></p>
+<div id="admonition-clarification" class="admonition admonish-info" role="note" aria-labelledby="admonition-clarification-title">
+<div class="admonition-title">
+<div id="admonition-clarification-title">
+<p>Clarification</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/setup/phone.html#admonition-clarification"></a>
+</div>
+<div>
+<p>The "scan a QR code" step only has to be done during setup. During a typical login after setup, you don't need (and won't be shown) another QR code. If prompted for a code, you'll open your authenticator, get your current six-digit code, and give that to DAD and you'll be "in".</p>
+</div>
+</div>
+<h2 id="on-your-computer-using-code-from-your-phone"><a class="header" href="#on-your-computer-using-code-from-your-phone">On your computer, using code from your phone...</a></h2>
+<h3 id="enter-a-code-from-your-new-dad-authenticator-entry-into-dad-to-confirm-that-setup-worked"><a class="header" href="#enter-a-code-from-your-new-dad-authenticator-entry-into-dad-to-confirm-that-setup-worked">Enter a code from your new DAD authenticator entry into DAD to confirm that setup worked</a></h3>
+<p>In your authenticator, there will be a six digit code. This code changes about every thirty seconds. Enter the current code (no spaces, just digits) into the "Verification Code" field in DAD and click the "Verify" button. You should now be logged in; congratulations!</p>
+<div id="admonition-dont-delete-the-authenticator" class="admonition admonish-danger" role="note" aria-labelledby="admonition-dont-delete-the-authenticator-title">
+<div class="admonition-title">
+<div id="admonition-dont-delete-the-authenticator-title">
+<p>Don't delete the authenticator</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/setup/phone.html#admonition-dont-delete-the-authenticator"></a>
+</div>
+<div>
+<p>Don't delete the authenticator. You aren't going to need it especially often, but you will need it.</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="browser-authentication-setup"><a class="header" href="#browser-authentication-setup">Browser Authentication Setup</a></h1>
+<h3 id="install-an-authenticaton-app-on-your-browser"><a class="header" href="#install-an-authenticaton-app-on-your-browser">Install an authenticaton app on your browser</a></h3>
+<p>Open the appropriate link and install:</p>
+<p><a href="https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai?hl=en">Authenticator extension for Chrome</a></p>
+<p><a href="https://addons.mozilla.org/en-US/firefox/addon/auth-helper/">Authenticator extension for Firefox</a></p>
+<p><a href="https://microsoftedge.microsoft.com/addons/detail/authenticator-2fa-client/ocglkepbibnalbgmbachknglpdipeoio">Authenticator extension for Edge</a></p>
+<p>You have a new icon on the bar in the upper-right corner of the browser. In Chrome (you are probably using chrome), the icon is hidden in a menu. To expose it, first click on the puzzle piece then in the exposed menu click on the authenticator's logo or name to launch it.</p>
+<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/setup/browser.html#admonition-tip"></a>
+</div>
+<div>
+<p>Consider pinning the authenticator for more convenient access. To do this: open the puzzle-piece menu again, and click on the "pin".</p>
+<p><img src="login/2fa/setup/images/chromestep.png" alt="Demonstration of pinning an extension to the address bar in Chrome" /></p>
+</div>
+</div>
+<h3 id="attempt-to-log-in-to-dad-1"><a class="header" href="#attempt-to-log-in-to-dad-1">Attempt to log in to DAD</a></h3>
+<p>Attempt to log in to DAD. You should be on a screen titled "Configure Authenticator App". The page should have a QR code (a square barcode thing) on it and a CHALLENGE PHRASE (blue password-like text) above it.</p>
+<p><img src="login/2fa/setup/images/phone-6.png" alt="Example screenshot of the DAD &quot;2fa setup&quot; splash screen containing the two options for setup: a QR code and a password" /></p>
+<p><em>This screenshot is for illustration purposes. You will get your code from the DAD website. You will not get it from this image it is only an example.</em></p>
+<h3 id="use-the-authenticator-to-scan-the-qr-code-1"><a class="header" href="#use-the-authenticator-to-scan-the-qr-code-1">Use the authenticator to scan the QR code</a></h3>
+<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div class="admonition-title">
+<div id="admonition-info-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/setup/browser.html#admonition-info"></a>
+</div>
+<div>
+<p>This section describes the "scan the QR code" approach to creating the entry. If you would like to instead use the CHALLENGE PHRASE method, see alternate instructions <a href="http://dadbooktest.nyuu.page/login/2fa/support.html#an-alternative-to-scanning-the-qr-code">here</a></p>
+</div>
+</div>
+<p>Click on the authenticator icon. Then click on the button below that looks like [-] to open the QR scanner. This opens a "click and drag to select" interface.</p>
+<p>Click, drag, and release to select the QR code. Let go to confirm selection. You should see a confirmation message; click ok.</p>
+<p><img src="login/2fa/setup/images/web-scanner.webp" alt="Demonstration of clicking, selecting, and releasing the QR code, using a &#39;padded&#39; selection" /></p>
+<p><em>This is an animation demonstrating how to use the authenticator to scan the QR code</em></p>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/setup/browser.html#admonition-note"></a>
+</div>
+<div>
+<p>If you instead get an error: try it again with a larger / wider / padded selection. You want there to be a bit of blank space on the sides of the selection. For more on this see the relevant support section, <a href="http://dadbooktest.nyuu.page/login/2fa/support.html#browser-extension-qr-scanner-says-unrecognized-qr-code">Browser extension QR scanner says Unrecognized QR code</a>.
+If it still isn't working: try the CHALLENGE PHRASE method instead.</p>
+</div>
+</div>
+<p>If you open the authenticator you should now see an entry/"tile" for DAD containing a title, a six digit code, and a timer. Congratulations! You have set up your authenticator. Now all that's left is to use it.</p>
+<h3 id="enter-a-code-from-your-new-dad-authenticator-entry-into-dad-to-confirm-that-setup-worked-1"><a class="header" href="#enter-a-code-from-your-new-dad-authenticator-entry-into-dad-to-confirm-that-setup-worked-1">Enter a code from your new DAD authenticator entry into DAD to confirm that setup worked</a></h3>
+<p>Open your authenticator. In your authenticator, there will be a six digit code. This code changes about every thirty seconds. Enter the current code (no spaces, just digits) into the "Verification Code" field in DAD and click the "Verify" button. You should now be logged in; congratulations!</p>
+<p><img src="login/2fa/setup/images/verifything.png" alt="Screenshot of workflow of getting and entering code from authenticator" /></p>
+<p><em>The screen will look something like this.</em></p>
+<div id="admonition-note-1" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-1-title">
+<div class="admonition-title">
+<div id="admonition-note-1-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/setup/browser.html#admonition-note-1"></a>
+</div>
+<div>
+<p>Please don't delete the authenticator! You aren't going to need it especially often, but you do want it to be available.</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="how-does-logging-in-using-2fa-work-once-i-have-set-it-up"><a class="header" href="#how-does-logging-in-using-2fa-work-once-i-have-set-it-up">How does logging in using 2FA work once I have set it up?</a></h1>
+<h2 id="logging-in"><a class="header" href="#logging-in">Logging in</a></h2>
+<p>Log in to DAD using your username and password.</p>
+<p>Most of the time, you will be logged in immediately, in the manner you are used to.</p>
+<p>Some of the time, you will be asked to give a code from your authenticator. So, open your authenticator, and find the correct entry. It will show you a unique, dynamically generated six-digit number. You enter this code into the verification code field in DAD and you're in!</p>
+<h2 id="remember-this-device"><a class="header" href="#remember-this-device">"Remember this device?"</a></h2>
+<p>The first time you log in using 2fa, you won't be given any additional options.</p>
+<p>From the second time onwards, whenever you log in to DAD and are asked to give an authenticator code, you will <em>also</em> be shown a checkbox, asking "remember this device?". It will look something like this:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Remember this device?</li>
+</ul>
+<p><strong>If you check the box (answering "yes"), then for the next 45 days, DAD will continue to let you log in on that device without asking you for a code again.</strong></p>
+<p>So: if checked, you will have authenticate every 1.5 months or whenever you use DAD from a new computer; whichever happens first.</p>
+<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/logging-in.html#admonition-tip"></a>
+</div>
+<div>
+<p>If you wanted to check "remember this device" and didn't: don't worry! You can just do it next time. Each time you try to log in to DAD and DAD asks you to provide a code, it will also ask if you would this time like to "remember this device". Just check the box that time and you'll be all set to not have to provide a code for a while.</p>
+</div>
+</div>
+<div id="admonition-advanced-tip" class="admonition admonish-bug" role="note" aria-labelledby="admonition-advanced-tip-title">
+<div class="admonition-title">
+<div id="admonition-advanced-tip-title">
+<p>Advanced Tip</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/logging-in.html#admonition-advanced-tip"></a>
+</div>
+<div>
+<p>The remember this device option is only able to remember one account at a time: the most recently "remembered" one. As result when you switch to a second account you will likely be prompted for a 2fa code even if you had previously checked remember this device for it.</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="support"><a class="header" href="#support">Support</a></h1>
+<h2 id="browser-extension-qr-scanner-says-unrecognized-qr-code"><a class="header" href="#browser-extension-qr-scanner-says-unrecognized-qr-code">Browser extension QR scanner says Unrecognized QR code</a></h2>
+<p>When using the scanner to select the QR code: leave a little bit of empty/blank/white space between the boundary of the selection and the edges of the code. In other words make the selection "bigger" than it looks like it needs to be.</p>
+<p>The scanner consistently recognizes the code when the selection is "padded" and fails to recognize when the selection is "snug". Try it a few times. Below is an animated demonstration:</p>
+<p><img src="login/2fa/images/web-scanner.webp" alt="Demonstration of using the browser extension qr scanner with a &#39;padded&#39; selection" /></p>
+<p><em>Make the selection you draw be as padded as possible.</em></p>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/support.html#admonition-note"></a>
+</div>
+<div>
+<p>If you can think of a better explanation for how to do this: please contact <a href="login/2fa/">milo.nygren-cassels@ndrn.org</a> with your idea.</p>
+</div>
+</div>
+<h2 id="authenticating-on-more-devices"><a class="header" href="#authenticating-on-more-devices">Authenticating on more devices</a></h2>
+<p>The verification codes generated by your authenticator will work on any computer. They are tied to your DAD account, not to a specific computer.</p>
+<p>If you succeeded in setting up your 2fa before, and then you tried to access dad on another computer and you weren't shown a QR code this time: that's fine! That's the intended behavior, not a bug. Go to wherever you originally set up your authenticator and get a code from there. It will work here.</p>
+<div id="admonition-note-1" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-1-title">
+<div class="admonition-title">
+<div id="admonition-note-1-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/support.html#admonition-note-1"></a>
+</div>
+<div>
+<p>Those who opted to use the browser extension might find the above instruction inconvenient.
+Unfortunately: you will need to do this in order to log in on another computer.
+Fortunately: once you have gotten yourself logged in, you can avoid having to do it again, by adding an authenticator entry on the new computer, which you can use to get your verification code when DAD next asks for one. The next heading, Copy my authenticator entry onto another device, explains how to do this.</p>
+</div>
+</div>
+<h2 id="copy-my-authenticator-entry-onto-another-device"><a class="header" href="#copy-my-authenticator-entry-onto-another-device">Copy my authenticator entry onto another device</a></h2>
+<p>The steps involved in this are:</p>
+<ul>
+<li>
+<p>Log in to DAD on the device</p>
+<ul>
+<li>See preceding heading Authenticating on more devices</li>
+</ul>
+</li>
+<li>
+<p>Install an authenticator on the device</p>
+</li>
+<li>
+<p>In DAD, access your QR code. To do this:</p>
+<ol>
+<li>
+<p>Go to User Preferences.</p>
+</li>
+<li>
+<p>From there, go to Two Factor Authentication.</p>
+</li>
+<li>
+<p>From there, go to Setup Authenticator App.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Use authenticator you installed to scan the QR code</p>
+</li>
+</ul>
+<div id="admonition-note-2" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-2-title">
+<div class="admonition-title">
+<div id="admonition-note-2-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/support.html#admonition-note-2"></a>
+</div>
+<div>
+<p>The verification codes generated by your authenticator will work on any computer. So: only reason you would do this is if you expect you might want to log in, in a context where you don't have access to the authenticator you set up previously.</p>
+</div>
+</div>
+<h2 id="an-alternative-to-scanning-the-qr-code"><a class="header" href="#an-alternative-to-scanning-the-qr-code">An alternative to scanning the QR code</a></h2>
+<p>Attempt to log in to DAD. You should see a screen titled "Configure Authenticator App". The page should have a QR code (a square barcode thing) on it.</p>
+<p><img src="login/2fa/images/phone-6.png" alt="Screenshot of the DAD &#39;Configure Authenticaton App&#39; page" /></p>
+<p><em>The screen will look something like this</em></p>
+<p>Directly above the QR code, there is a line that begins scan the qr code or enter this key followed by a long, blue-colored sequence of numbers and letters. I'm going to refer to that blue text as the challenge phrase.</p>
+<p><img src="login/2fa/images/challenge-phrase.png" alt="Screenshot of the DAD &#39;Configure Authenticaton App&#39; page with the challenge phrase &amp; its instructions highlighted" /></p>
+<p><em>This is the part of the screen you're looking for</em></p>
+<p>Select the and copy the challenge phrase. Now open your authenticator. Then, click the ✏️ ("pencil") icon. Then, click the ➕ ("plus") icon. Then, click manual entry.</p>
+<p>You should see two text fields: issuer and secret.</p>
+<p>In the issuer field, write anything you want. It's a descriptor for your reference.</p>
+<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/support.html#admonition-tip"></a>
+</div>
+<div>
+<p>We'd suggest putting the username of the account in the issuer field. It might be helpful if you ever need support and it definitely will be helpful for keeping things clear if you use multiple DAD accounts.</p>
+</div>
+</div>
+<p>In the secret field, paste the challenge phrase.</p>
+<p>Now, click "ok". If you open your authenticator again, there should now be a new entry!</p>
+<h2 id="i-no-longer-have-access-to-my-authenticator"><a class="header" href="#i-no-longer-have-access-to-my-authenticator">I no longer have access to my authenticator</a></h2>
+<p>Have your local DAD administrator reset your 2fa settings. They can do this in the same way that they can reset passwords. Have them log in on an account with admin powers, then go to Open Administration, then go to the Employees dropdown, then go to the Employees menu option. They should now be at a table listing all the users. The last column of this table, Reset 2fa, will allow them to reset your 2fa settings.</p>
+<p>Then, follow the steps in the Phone Authentication Setup or Browser Authentication Setup section of this guide.</p>
+<h2 id="the-codes-my-authenticator-is-making-dont-work"><a class="header" href="#the-codes-my-authenticator-is-making-dont-work">The codes my authenticator is making don't work</a></h2>
+<div id="admonition-bug" class="admonition admonish-bug" role="note" aria-labelledby="admonition-bug-title">
+<div class="admonition-title">
+<div id="admonition-bug-title">
+<p>Bug</p>
+</div>
+<a class="admonition-anchor-link" href="login/2fa/support.html#admonition-bug"></a>
+</div>
+<div>
+<p>The most likely cause of the issue is "using an example QR code from a guide rather than from using the DAD website". The second most likely cause is "using qr code &amp; authenticator entry &amp; verification codes from the DAD BETA site". Regardless of cause, there is a fix that should work in all cases.</p>
+</div>
+</div>
+<p>Have your local DAD administrator reset your 2fa settings. They can do this in the same way that they can reset passwords. Have them log in on an account with admin powers, then go to Open Administration, then go to the Employees dropdown, then go to the Employees menu option. They should now be at a table listing all the users. The last column of this table, Reset 2fa, will allow them to reset your 2fa settings.</p>
+<p>Then, follow the steps in the Phone Authentication Setup or Browser Authentication Setup section of this guide, starting from the subsection Attempt to log in to DAD.</p>
+<h2 id="i-have-another-issue"><a class="header" href="#i-have-another-issue">I have another issue</a></h2>
+<p>Contact <a href="login/2fa/MAILTO:milo.nygren-cassels@ndrn.org">milo.nygren-cassels@ndrn.org</a> with any questions or suggestions.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="dad-control-panel"><a class="header" href="#dad-control-panel">DAD Control Panel</a></h1>
+<p>The DAD Control Panel is the main window from which you can launch DAD or select other controls that support your use of DAD.</p>
+<p><strong>Sample View</strong>:</p>
+<p><img src="guide/images/control-panel.png" alt="DAD control panel" /></p>
+<p>The DAD Control Panel will reopen be open whenever DAD is running. It can be minimized or “hidden” behind other windows. Closing window will end the DAD session.</p>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="guide/control-panel.html#admonition-note"></a>
+</div>
+<div>
+<p>Controls panel options vary based on the user’s permission status</p>
+</div>
+</div>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Feature Description</th></tr></thead><tbody>
+<tr><td><strong>Open Desktop</strong></td><td>Launches DAD, which enables you to enter information about your Clients, Service Requests, Time Entry and Projects</td></tr>
+<tr><td><strong>Open Report Generator</strong></td><td>Launches the Report Generator, which enables users with permissions with access to create and view reports</td></tr>
+<tr><td><strong>Open Administration</strong></td><td>Launches an Administration window, which enables users with advanced permissions to update and maintain DAD locally.</td></tr>
+<tr><td><strong>User Preferences</strong></td><td>Lets you modify the behavior of DAD (for example, you can choose what information is displayed on the Desktop)</td></tr>
+<tr><td><strong>Logout</strong></td><td>Closes DAD and any open application or support windows</td></tr>
+</tbody></table>
+</div><div id="admonition-note-1" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-1-title">
+<div class="admonition-title">
+<div id="admonition-note-1-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="guide/control-panel.html#admonition-note-1"></a>
+</div>
+<div>
+<p>The DAD system does have a timeout feature. The feature is set to 6 hours. Do not rely on the timeout feature. Please remember to logout.</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="displayuser-preferences"><a class="header" href="#displayuser-preferences">Display/User Preferences</a></h1>
+<p>DAD is designed to be fully accessible and to enhance the accessible features of your preferred web browser. Using DAD's User Preferences function information can be set to the individual user’s preferences, they associate with your login.</p>
+<p>To change preferences, follow these steps:</p>
+<ol>
+<li>
+<p>Go to the <strong>Control Panel</strong></p>
+</li>
+<li>
+<p>Left click <strong>User Preferences</strong></p>
+</li>
+<li>
+<p><strong>Turn features on or off</strong> and <strong>change current settings</strong> by clicking on drop down menu arrows</p>
+</li>
+<li>
+<p><strong>Change Desktop view</strong> by selecting <strong>Available Desktop Controls</strong> and clicking on <strong>right facing arrow</strong> to move them over to <strong>Used Desktop Controls</strong> and vice versa</p>
+</li>
+<li>
+<p><strong>Sort Used Desktop Controls</strong> by clicking on <strong>up or down arrows</strong> to change order of how controls appear on your desktop</p>
+</li>
+<li>
+<p><strong>Change Password</strong> by clicking on <strong>Change Password</strong> button</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>; or to close the window without saving your changes, click <strong>Cancel</strong></p>
+</li>
+<li>
+<p>A pop-up will appear to let you know changes have been made. Click <strong>Done</strong> to return to the control panel.</p>
+</li>
+</ol>
+<p><em>Note: Depending on your DAD security permissions, you may not see all of the options shown.</em></p>
+<p><img src="display/images/preferences.png" alt="DAD preferences" /></p>
+<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="display\index.html#admonition-tip"></a>
+</div>
+<div>
+<p>Mouse acceleration feature is <em><strong>Off</strong></em> by default. For <strong>Assistive Technology Devices</strong>, this feature must be turned <em><strong>On</strong></em>. When turned on, actions from your DAD Action drop-down menus launch with just the click of a mouse.</p>
+</div>
+</div>
+<div id="admonition-tip-1" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-1-title">
+<div class="admonition-title">
+<div id="admonition-tip-1-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="display\index.html#admonition-tip-1"></a>
+</div>
+<div>
+<p>If you do not choose a Desktop Control item to be displayed on your Desktop, you will still be able to display it manually by choosing the item from the Desktop Actions drop-down menu.  The <strong>Action</strong> drop-down menu <strong>display</strong> options are categorized by <strong>Primary</strong>, <strong>Associated</strong>, <strong>Team</strong> and <strong>Agency</strong>.  The assignment category is specified from each Client, Service Request and Project.</p>
+</div>
+</div>
+<div id="admonition-tip-2" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-2-title">
+<div class="admonition-title">
+<div id="admonition-tip-2-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="display\index.html#admonition-tip-2"></a>
+</div>
+<div>
+<p>You must <strong>refresh</strong> DAD before you can see any User Preference changes you have made.  To refresh, go to the DAD desktop, right click your mouse and select <strong>Refresh</strong>.</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="desktop"><a class="header" href="#desktop">Desktop</a></h1>
+<p>The Desktop is like a personal home page. The desktop displays a summary listing of information and database search functions, as determined by the settings of User Preferences.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="desktop-links"><a class="header" href="#desktop-links">Desktop Links</a></h1>
+<p>The links are available from the Desktop (and from every DAD screen). No matter where you are in DAD, you have access to the five (5) links that take you directly to one of the five (5) DAD views:</p>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Feature Description</th></tr></thead><tbody>
+<tr><td>Desktop</td><td>Always takes you back to your DAD Desktop</td></tr>
+<tr><td>Client</td><td>Displays the Client summary or detail screen (depending on where you are in DAD) of the Client whose Service Request you are viewing or the last Client that you viewed, if you are not in a Service Request. It also gives you access to actions for creating and editing Client records</td></tr>
+<tr><td>Service Request</td><td>Displays the Service Request summary or detail screen (depending on where you are in DAD) for the last Service Request you viewed and gives you access to actions for creating and editing Service Requests</td></tr>
+<tr><td>Project</td><td>Displays a Project detail screen for the last Project you viewed and gives you access to actions for creating and editing Projects</td></tr>
+<tr><td>Time</td><td>Links you directly to a Time entry to be used for recording lunch and leave time. Also gives you access to the drop down for getting your timesheet and an employee time report that can be used to check time on a specific day. (see details later in this manual)</td></tr>
+</tbody></table>
+</div><div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="desktop/links\index.html#admonition-tip"></a>
+</div>
+<div>
+<p>When using Links Buttons to move between Client and Service Request, use caution. When using the links, be sure you are indeed in the Client, Service Request or Project you want to be in before making any edits or entering any time or notes.</p>
+</div>
+</div>
+<p><strong>Sample View</strong>:</p>
+<p><img src="desktop/links/images/desktop.png" alt="Desktop" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="desktop-actions"><a class="header" href="#desktop-actions">Desktop Actions</a></h1>
+<p>The Desktop also includes links and an Actions drop-down menu, which gives you access to more detailed information about your Clients, Service Requests, and Projects. The action is divided to Views and Tasks.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="views"><a class="header" href="#views">Views</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Feature Description</th></tr></thead><tbody>
+<tr><td><strong>Display Primary Clients</strong></td><td>Displays a summary listing of your open primary Clients and gives you access to actions for viewing open, closed, or all primary Clients. Primary Clients are those who have Service Requests assigned to you for advocacy/representation.</td></tr>
+<tr><td><strong>Display Associated Clients</strong></td><td>Displays a summary listing of your open associated Clients and gives you access to actions for viewing open, closed, or all associated Clients. Associated Clients are those with Service Requests assigned to someone else for advocacy/representation in which you have some involvement, such as assisting or supervising the assigned staff.</td></tr>
+<tr><td><strong>Display Team Clients</strong></td><td>Displays a summary listing of your open team Clients and gives you access to actions for viewing open, closed, or all Team Clients. Team Clients are those Clients with Service Request determined to be part of some team effort for which you are a member (such as the Investigation Team).</td></tr>
+<tr><td><strong>Display Primary Service Request</strong></td><td>Displays a summary listing of your open primary Service Requests and gives you access to actions for viewing open, closed, or all primary Service Requests. Primary Service Requests are those assigned to you for advocacy/representation. <em>NOTE: Only 1 person can be assigned as the Primary Assigned Employee on a Service Request.</em></td></tr>
+<tr><td><strong>Display Associated Service Request</strong></td><td>Displays a summary listing of your open associated Service Requests and gives you access to actions for open, closed, or all associated Service Requests. Associated Service Requests are those assigned to someone else for advocacy/representation in which you have some involvement, such as assisting or supervising the assigned staff</td></tr>
+<tr><td><strong>Display Team Service Request</strong></td><td>Displays a summary listing of your open team Service Requests and gives you access to actions for viewing open, closed, or all team Service Requests. Team Service Requests are those Service Requests determined to be part of some team effort for which you are a member (such as an Investigation Team).</td></tr>
+<tr><td><strong>Display Primary Projects</strong></td><td>Displays a summary listing of open primary Projects and gives you access to actions for viewing open, closed, or all primary Projects. Primary Projects are those assigned to you for activity on that Project. <em>NOTE: More than 1 person can be assigned as a Primary Assigned Employee on a Project.</em></td></tr>
+<tr><td><strong>Display Associated Projects</strong></td><td>Displays a summary listing of open associated Projects and gives you access to actions for viewing open, closed, or all associated Projects. Associated Projects are those assigned to someone else for activity in which you have some involvement, such as assisting or supervising the assigned staff.</td></tr>
+<tr><td><strong>Display Team Projects</strong></td><td>Displays a summary listing of open team Projects and gives you access to actions for viewing open, closed, or all team Projects. Team Projects are those Projects determined to be part of some team effort for which you are a member (such as an internal workgroup).</td></tr>
+<tr><td><strong>Display Agency Projects</strong></td><td>Displays a summary listing of open agency Projects and gives you access to actions for viewing open, closed, or all agency Projects. Agency Projects are all Projects in DAD</td></tr>
+<tr><td><strong>Display Time</strong></td><td>Displays a summary list of time you have recorded for Service Requests, Projects, lunch (if applicable), and leave time for the current, or the last 7, the last 14, or the last 30 days or you can choose to ‘display time between’ certain dates.</td></tr>
+</tbody></table>
+</div><div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="desktop/actions/views.html#admonition-note"></a>
+</div>
+<div>
+<p>The Display will remain at the last chosen setting until you change it.</p>
+</div>
+</div>
+<p><strong>Sample View</strong>:</p>
+<p><img src="desktop/actions/images/desktop-actions.png" alt="Desktop actions" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tasks"><a class="header" href="#tasks">Tasks</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Feature Description</th></tr></thead><tbody>
+<tr><td><strong>Basic Contact Search</strong></td><td>Allows you to search for a Client or other contact entered in DAD using basic information such as Client ID, first or last name, organization, phone number, etc.</td></tr>
+<tr><td><strong>Advanced Contact Search</strong></td><td>Allows you to search for a Client or other contact using any portion of the Client record, such as age, disability, or gender.</td></tr>
+<tr><td><strong>Basic Service Request Search</strong></td><td>Allows you to search for a Client’s Service Request using basic information such as the Service Request ID, Client name, funding source, etc.</td></tr>
+<tr><td><strong>Advanced Service Request Search</strong></td><td>Allows you to search for a Client’s Service Request using basic information such as that listed above as well as facility and Service Request Type</td></tr>
+<tr><td><strong>Basic Project Search</strong></td><td>Allows you to search for Projects using basic information such as Project ID, or name, or funding source</td></tr>
+<tr><td><strong>Advanced Project Search</strong></td><td>Allows you to search for Projects using basic information such as that listed above as well as Project closed date and Priorities and Objectives</td></tr>
+<tr><td><strong>Quick I &amp; R</strong></td><td>Allows you to quick search of I&amp;R information</td></tr>
+<tr><td><strong>Print</strong></td><td>Allows you to print the current screen</td></tr>
+</tbody></table>
+</div><div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="desktop/actions/tasks.html#admonition-note"></a>
+</div>
+<div>
+<p>The Contact, Service Request and Project search functions can also be shown on your DAD Desktop by selecting them in your User Preferences.</p>
+</div>
+</div>
+<p><strong>Sample View</strong>:</p>
+<p><img src="desktop/actions/images/tasks.png" alt="Task actions" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="desktop-columns"><a class="header" href="#desktop-columns">Desktop Columns</a></h1>
+<p>Options exist to display the various column headings when viewing Primary and
+Associated Clients, Service Requests, and Projects.Left click on the blue and white
+charts with the red X in the right upper corner of the top of each column, to ‘hide’ that
+column.</p>
+<ul>
+<li>
+<p>Left click on the yellow and blue chart in the right upper corner of the top of the last column, to show all available columns.</p>
+</li>
+<li>
+<p>The ability to sort by category (ascending and descending) and/or conduct compound searches exists.</p>
+</li>
+</ul>
+<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="desktop-columns\index.html#admonition-tip"></a>
+</div>
+<div>
+<p>If you choose zero, it will show you all of the items.</p>
+</div>
+</div>
+<p><strong>Sample View</strong>:</p>
+<p><img src="desktop-columns/images/desktop-columns.png" alt="Desktop columns" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="basic-contact-search-criteria"><a class="header" href="#basic-contact-search-criteria">Basic Contact Search Criteria</a></h1>
+<p>Whenever contact is made with a new individual or potential client the first step is to do a search to determine the individual has ever been entered in the system as a client, guardian, contact or advisory of a client, or in anyway has been previously connected to the agency. This step avoids entering an individual into the system more than once.</p>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="contact-search\index.html#admonition-note"></a>
+</div>
+<div>
+<p>DAD doesn't have the ability to check for potential conflicts of interest as part of its toolset.</p>
+</div>
+</div>
+<p><strong>Sample View</strong>:</p>
+<p><img src="contact-search/images/contact-search.png" alt="Basic contact search" /></p>
+<div id="admonition-note-1" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-1-title">
+<div class="admonition-title">
+<div id="admonition-note-1-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="contact-search\index.html#admonition-note-1"></a>
+</div>
+<div>
+<p>The same search logic exists for projects and service requests.</p>
+</div>
+</div>
+<p><strong>Advanced Contact Search</strong> can be accessed by your DAD Desktop dropdown menu and has many more options for search criteria.</p>
+<div id="admonition-note-2" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-2-title">
+<div class="admonition-title">
+<div id="admonition-note-2-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="contact-search\index.html#admonition-note-2"></a>
+</div>
+<div>
+<p>If DAD contains contact records that match your search information, they will be displayed on a Search Results screen. From that screen, you can choose to view one of the listed contact records.  If the contact found matches your Client information, a new Service Request can then be created for the existing Client.  If the contact search did not find a match in the existing data base, you will need to create a new Client.</p>
+</div>
+</div>
+<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="contact-search\index.html#admonition-tip"></a>
+</div>
+<div>
+<p>Both methods include a "Sounds Like" and "Match on" feature in case you are not sure how some of the search items are spelled. It is recommended that two (2) searches are done with one using the 'Sounds Like' feature to avoid 'duplications' when entering new Clients and Service Requests.</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="client-information"><a class="header" href="#client-information">Client Information</a></h1>
+<p>If it is established that the individual is in the database, the items already created appear. It goes through and highlights all the service requests, contacts, and any of the notes that are associated with that particular individual. Using the Actions drop down you have the ability to any of items created in that particular wizard. The information will be updated a note will automatically done.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="client-view"><a class="header" href="#client-view">Client View</a></h1>
+<p>The Client View displays information about a specific client; a list of your choice of all, open, or closed Service Requests for that client; and contacts for that Client. You can also see your choice of all, or the last five, the last 10, or the last 15 notes written about that Client.</p>
+<p>You can access the Client View three ways:</p>
+<ol>
+<li>
+<p>By choosing a specific Client record from the list on your Desktop.</p>
+</li>
+<li>
+<p>By left clicking the Client link from any DAD window (for the last client you viewed). Be sure you are in correct Client before you add or edit any information.</p>
+</li>
+<li>
+<p>By choosing a Basic or Advanced Contact Search to find a Client from the Desktop Actions Tasks dropdown.</p>
+</li>
+</ol>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="client-view\index.html#admonition-note"></a>
+</div>
+<div>
+<p>You have the option to choose to have the Contact search function on the Desktop under User Preferences.</p>
+</div>
+</div>
+<p>You have the following options in the “Actions” drop-down menu when in the Client view.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="views-1"><a class="header" href="#views-1">Views</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Feature Description</th></tr></thead><tbody>
+<tr><td>Print View</td><td>Displays all of the information entered in the Client record</td></tr>
+<tr><td>Display Client Summary</td><td>Displays limited information about the Client</td></tr>
+<tr><td>Display Client Detail</td><td>Displays detailed information about the Client</td></tr>
+<tr><td>Display Client Notes</td><td>Displays all, or the last 5, 10, or 15 notes for the Client</td></tr>
+<tr><td>Display Client Contacts</td><td>Displays all contacts connected to the Client</td></tr>
+<tr><td>Display Service Requests</td><td>Displays a Service Request summary and gives you access to actions for creating and editing Service Requests</td></tr>
+<tr><td>Display Client Security</td><td>Displays the DAD security groups with permission to view the Client</td></tr>
+<tr><td>Display Primary Clients</td><td>Displays all, open, or closed Primary Clients assigned to the user depending on which option you choose from the drop down menu</td></tr>
+<tr><td>Display Associated Clients</td><td>Displays all, open, or closed Associated Clients assigned to the user depending on which option you choose from the drop down menu</td></tr>
+<tr><td>Display Team Clients</td><td>Displays all, open, or closed Team Clients assigned to the user</td></tr>
+</tbody></table>
+</div><div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="client-view/views.html#admonition-note"></a>
+</div>
+<div>
+<p>When displaying Primary or Associated Service Requests, the last choice you make in the available drop down menu (all, open, or closed) is what will appear each time you are on your Desktop until you choose another option.</p>
+</div>
+</div>
+<p><img src="client-view/images/client-view.png" alt="Client view" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tasks-1"><a class="header" href="#tasks-1">Tasks</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Feature Description</th></tr></thead><tbody>
+<tr><td>Edit Client</td><td>Enables you to edit many of the Client information fields such as address</td></tr>
+<tr><td>Edit Reference Date</td><td>Enables you to edit the reference date for the Client</td></tr>
+<tr><td>Edit Disabilities</td><td>Enables you to add or remove disabilities that the Client discloses</td></tr>
+<tr><td>Edit Accommodations</td><td>Enables you to add/remove accommodations needed by the Client</td></tr>
+<tr><td>Edit Client Local Data</td><td>Enables you to edit fields set up locally such as veteran status</td></tr>
+<tr><td>Create New Client Note</td><td>Enables you to create a new note</td></tr>
+<tr><td>Create New Client</td><td>Enables you to create a new Client record</td></tr>
+<tr><td>Create New Service Request</td><td>Enables you to create a new Service Request for the Client</td></tr>
+<tr><td>Create Quick I &amp; R for Client</td><td>Enables you to create a quick I&amp;R for the Client</td></tr>
+<tr><td>Basic Contact Search</td><td>Allows you to perform a basic Contact search</td></tr>
+<tr><td>Advanced Contact Search</td><td>Allows you to perform an advanced Contact search</td></tr>
+<tr><td>Basic Service Request Search</td><td>Allows you to perform a basic Service Request search</td></tr>
+<tr><td>Advanced Service Request Search</td><td>Allows you to perform a advances Service Request search</td></tr>
+<tr><td>Print</td><td>Allows you to print the current screen</td></tr>
+</tbody></table>
+</div><div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="client-view/tasks.html#admonition-note"></a>
+</div>
+<div>
+<p>You may not have all of these options depending on your DAD security level.</p>
+</div>
+</div>
+<p><strong>Sample View</strong>:</p>
+<p><img src="client-view/images/client-views.png" alt="Client view" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="create-new-client"><a class="header" href="#create-new-client">Create New Client</a></h1>
+<p>The methodology for using the DAD application is that advocacy efforts from an agency for an <em>individual</em> are recorded as a Service Request associated with a Client. Agency activities on behalf of <em>groups of individuals</em> are recorded as Projects.  Projects are used to document efforts such as monitoring facilities, education and outreach activities, systems advocacy, and investigations involving a group of people. Projects can also be used to document administrative activities and time.</p>
+<p>Individuals are recorded in the system once as a contact and that contact has specified connections for the different recorded roles for that individual. A contact can be a Client, a primary contact, an adversary, or any other contact type that is specified in the Administration component of DAD. Regardless of how the contact is selected for editing, editing the contact information, such as the address or phone number, will update the contact’s information for each item it is connected to. There is no limit to how many connections a contact can have.</p>
+<p>If it has been established that the individual is not in the database, there is the ability to create a new client.</p>
+<p><img src="client-view/create-client/images/create-new-client.png" alt="Create new client dropdown" /></p>
+<p>Any information entered into the Basic Contact Search Criteria will be automatically transferred to Client Information.</p>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="client-view/create-client\index.html#admonition-note"></a>
+</div>
+<div>
+<p>DAD assigns a unique ID to new clients. This number is listed in the Client ID field for each client record. If the agency has another filing system in use, that information, can be entered under Client Number and used as a secondary ID.</p>
+</div>
+</div>
+<p><img src="client-view/create-client/images/create-new-client2.png" alt="Create new client form" /></p>
+<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="client-view/create-client\index.html#admonition-tip"></a>
+</div>
+<div>
+<p>The phone fields are set so that additional information can be added i.e. 1234567890 ext 001 or 1234567890 (extra note) ask for "Mickey"</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="client-disabilities"><a class="header" href="#client-disabilities">Client Disabilities</a></h1>
+<p>The current set matches federal reporting forms. Categories can be added. Sub-sets can also be added to meet program requirements.</p>
+<p><strong>Sample View</strong>:</p>
+<p><img src="client-view/create-client/images/client-disabilities.png" alt="Client disabilities" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="client-accomodations"><a class="header" href="#client-accomodations">Client Accomodations</a></h1>
+<p>List of possible accommodations can be updated as necessary.</p>
+<p><strong>Sample View</strong>:</p>
+<p><img src="client-view/create-client/images/client-accomodations.png" alt="Client accomodations" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="client-contacts"><a class="header" href="#client-contacts">Client Contacts</a></h1>
+<p>Primary Contact Field</p>
+<p>You can choose to ‘Use Client As Contact’ for the Primary Contact, if the client is his
+or her own Primary Contact or, you can complete a contact search for a different
+individual.  DAD will search the database for that person.  If the contact search results
+list the correct individual, you can select that record. Otherwise, you can select “Add
+New Contact”.</p>
+<p><img src="client-view/create-client/images/client-contacts-primary-contact-field.png" alt="Primary contact field" /></p>
+<p>Complete the following fields and select “Save” to create a New Contact.</p>
+<p><img src="client-view/create-client/images/client-contacts-primary-contact-field-2.png" alt="Primary contact field 2" /></p>
+<p>After the Primary Contact is created, you can edit information if needed.  Choose the ’Relationship to Client’ from the drop-down menuif the client is not the Primary Contact. Enter any ‘Additional Info’ not already included. If you selected “Use Client as Contact”, to create the Primary Contact, “Is the Client” will be checked.</p>
+<p><img src="client-view/create-client/images/client-contacts-primary-contact-field-3.png" alt="Primary contact field 3" /></p>
+<p>In a similar manner, with a subsequent screen, you will also have the opportunity to enter Guardian information.</p>
+<p>You must select “Finish” on the final screen to save and create the Client Record. This can be displayed in Summary or Detail View. Use the drop-down list in the “Actions” menu to switch to the preferred view.</p>
+<p>Client Detail View (example)</p>
+<p><img src="client-view/create-client/images/client-contacts-primary-contact-field-4.png" alt="Primary contact field 4" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="edit-clients"><a class="header" href="#edit-clients">Edit Clients</a></h1>
+<p>To edit a Client, you must start from the Client Detail or Client Summary view. You get there by choosing a Client from your Desktop, or searching for and selecting a Client.</p>
+<p>From the Client view, you can choose to edit almost any section of the Client. See the <a href="http://https://dadbooktest.nyuu.page/client-view/index.html">Client View</a> section of this User’s Guide for details.</p>
+<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="client-view/edit-clients\index.html#admonition-tip"></a>
+</div>
+<div>
+<p>You can edit the Client’s legal guardian, primary, or other Contact from the Client view or from the Actions drop down menu. From the Client view, scroll down to the Contacts section, or select Display Client Contacts from the Actions/Views drop down menu. Once the Contact list is displayed, you can select View Details, Edit or Delete for any Contact. To add a new Contact, choose Create New Client Contact from the Tasks in the drop down menu from the Client Contacts screen.</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="attachments"><a class="header" href="#attachments">Attachments</a></h1>
+<p>Within the DAD system there is the ability to add attachments as necessary. Attachments can be sorted by Category. The list of categories can be expanded locally by your DAD Administrator. Attachment Type gives you the option of selecting “File” or “Link” (a web URL or address).</p>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="attachments\index.html#admonition-note"></a>
+</div>
+<div>
+<p>File capacity is currently set at 500 megabytes.</p>
+</div>
+</div>
+<p><strong>Sample View</strong>:</p>
+<p><img src="attachments/images/attachment.png" alt="Attachments" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="contacts"><a class="header" href="#contacts">Contacts</a></h1>
+<h2 id="types"><a class="header" href="#types">Types</a></h2>
+<ul>
+<li>
+<p>Primary Contacts</p>
+</li>
+<li>
+<p>Guardian (type)</p>
+</li>
+<li>
+<p>Add New Client Contact</p>
+</li>
+</ul>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="contacts\index.html#admonition-note"></a>
+</div>
+<div>
+<p>List of Contact Types can be edited as necessary.</p>
+</div>
+</div>
+<p><strong>Sample View</strong>:</p>
+<p><img src="contacts/images/contacts.png" alt="Contacts" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="service-request"><a class="header" href="#service-request">Service Request</a></h1>
+<p>The methodology for using the DAD application is that advocacy efforts from an agency for an individual are recorded as a Service Request associated with a Client. Advocacy efforts from an agency for a group of individuals, training or outreach activities, or other administrative Projects are recorded as Projects.</p>
+<p>The following options are available under the “Actions” menu when in the Service Request View.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="views-2"><a class="header" href="#views-2">Views</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Feature Description</th></tr></thead><tbody>
+<tr><td>Print View</td><td>Displays all data for the Service Request, including notes, Record Time entries and information about the adversary and referrer.</td></tr>
+<tr><td>Display Service Request Summary</td><td>Displays limited information about the Service Request</td></tr>
+<tr><td>Display Service Detail</td><td>Displays detailed information about the Service Request<sup class="footnote-reference" id="fr-note-1"><a href="#footnote-note">1</a></sup></td></tr>
+<tr><td>Display Service Request Notes</td><td>Displays all, or the last 5, 10, or 15 notes related to the Service Request depending on how you set up your Service Request view</td></tr>
+<tr><td>Display Service Request Contacts</td><td>Displays all of the Client Contacts related to the Service Request.</td></tr>
+<tr><td>Display Service Request Employees</td><td>Displays all Employees assigned to the Service Request (whether primary or associated)</td></tr>
+<tr><td>Display Service Request Time</td><td>Displays all, or the last 5, 10, or 15 Record Time entries recorded for the Service Request depending on how you set up your Service Request view.</td></tr>
+<tr><td>Display Service Request Security</td><td>Displays the DAD security groups with permission to view the Service Request</td></tr>
+<tr><td>Display Service Request Publications</td><td>Displays the Publications that have been recorded in the Service Request</td></tr>
+<tr><td>Display Project Associations</td><td>Displays all DAD Projects associated with the Service Request</td></tr>
+<tr><td>Display Service Request Associations</td><td>Displays all DAD Service Requests associated with the Service Request</td></tr>
+<tr><td>Display Primary Service Requests</td><td>Displays open, closed, or all Primary Service Requests assigned to the user depending option you choose from the drop down menu</td></tr>
+<tr><td>Display Associated Service Requests</td><td>Displays open, closed, or all Associated Service Requests assigned to the user depending on option you choose from the drop down menu</td></tr>
+<tr><td>Display Team Service Requests</td><td>Displays open, closed, or all Team Service Requests assigned to the user.</td></tr>
+</tbody></table>
+</div><div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="service-request/views.html#admonition-note"></a>
+</div>
+<div>
+<p>When displaying Primary or Associated Service Requests, the last choice you make in the available drop down menu (all, open, or closed) is what will appear each time you are on your Desktop until you choose another option.</p>
+</div>
+</div>
+<p><strong>Sample View</strong>:</p>
+<p><img src="service-request/images/service-request.png" alt="Service request" /></p>
+<hr />
+<div id="admonition-note-1" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-1-title">
+<div class="admonition-title">
+<div id="admonition-note-1-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="service-request/views.html#admonition-note-1"></a>
+</div>
+<div>
+<p>Depending on which Service Request view you are in, you will see one or the other of the two options in the drop-down “Actions” menu.</p>
+</div>
+</div><hr>
+<ol class="footnote-definition"><li id="footnote-note">
+<p>see the below note <a href="#fr-note-1">↩</a></p>
+</li>
+</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="tasks-2"><a class="header" href="#tasks-2">Tasks</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Feature Description</th></tr></thead><tbody>
+<tr><td>Edit Service Request</td><td>Enables you to edit many of the Service Request information fields such as the Eligibility or Client Objective</td></tr>
+<tr><td>Edit Date Opened</td><td>Enables you to edit the date in which the Service Request was opened</td></tr>
+<tr><td>Edit Reference Date</td><td>Enables you to edit the reference date for the Service Request</td></tr>
+<tr><td>Edit Service Request Type</td><td>Enables you to edit the DAD Service Request Type</td></tr>
+<tr><td>Edit Funding Source</td><td>Enables you to edit the Funding Source for the Service Request</td></tr>
+<tr><td>Edit Service Request Type</td><td>Enables you to edit the DAD Service Request Type</td></tr>
+<tr><td>Edit Priorities/Objectives</td><td>Enables you to edit the Priorities and/or Objectives for the Service Request.</td></tr>
+<tr><td>Edit Primary Disability</td><td>Enables you to edit the Primary Disability for the Service Request and explain the Primary Disability if required</td></tr>
+<tr><td>Edit Problem/Sub Problem</td><td>Enables you to edit the Problem and/or Sub Problem for the Service Request</td></tr>
+<tr><td>Edit Teams</td><td>Enables you to edit the Teams connected to the Service Requests</td></tr>
+<tr><td>Edit Service Request Local Data</td><td>Enables you to edit fields set up by local administrators such as type of SSA benefit</td></tr>
+<tr><td>Create New Service Request Note</td><td>Enables you to create a new Note for the Service Request</td></tr>
+<tr><td>Create New Service Request Contact</td><td>Enables you to create a new Contact for the Service Request</td></tr>
+<tr><td>Record Service Request Time</td><td>Enables you to Record Time you spend working on the Service Request</td></tr>
+<tr><td>Prepare Service Request for Closing</td><td>Guides you through the process for closing a Service Request by completing the required fields</td></tr>
+<tr><td>Answer Closing Data</td><td>Once you have chosen Prepare Service Request for Closing but have not yet closed the Service Request, you will see this option that you can use to add or edit closing data</td></tr>
+<tr><td>Validate and Close Service Request</td><td>Once you have chosen Prepare Service Request for Closing and have answered the closing data but have not yet closed the Service Request, you will see this option to close the Service Request</td></tr>
+<tr><td>Move Service Request</td><td>Allows you to move the Service Request to another Client. Contact your DAD Administrator for assistance</td></tr>
+<tr><td>Create New Service Request</td><td>Allows you to create a new Service Request for the Client</td></tr>
+<tr><td>Create New Service Request Associated with Current Service Request</td><td>Allows you to create a new Service Request for the Client and associate it with the current Service Request</td></tr>
+<tr><td>Copy Service Request with Existing Funding Source</td><td>Allows you to create a new Service Request for the Client and copies the details from the current Service Request including the funding source</td></tr>
+<tr><td>Copy Service Request with Default Funding Source</td><td>Allows you to create a new Service Request for the Client and copies the details from the current Service Request but uses the default funding source</td></tr>
+<tr><td>Delete Service Request</td><td>Enables you to delete a Service Request. (Dependent on security permissions.)</td></tr>
+<tr><td>Basic Contact Search</td><td>See previous Desktop Actions section</td></tr>
+<tr><td>Advanced Contact Search</td><td>See previous Desktop Actions section.</td></tr>
+<tr><td>Basic Service Request Search</td><td>See previous Desktop Actions section.</td></tr>
+<tr><td>Advanced Service Request Search</td><td>See previous Desktop Actions section.</td></tr>
+<tr><td>Print</td><td>Allows you to print the current screen</td></tr>
+</tbody></table>
+</div><div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="service-request/tasks.html#admonition-note"></a>
+</div>
+<div>
+<p>The <strong>Reference Date</strong> is the date the Service Request was originally created. DAD fields will be limited to the options available on that date. In order to have the current DAD fields and options, the reference date must be edited to the current date. Contact the your DAD Administrator for assistance.</p>
+</div>
+</div>
+<p><strong>Sample View</strong>:</p>
+<p><img src="service-request/images/tasks.png" alt="Tasks" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="new-service-request"><a class="header" href="#new-service-request">New Service Request</a></h1>
+<p>Select Create New Service Request from the “Actions” menu.</p>
+<p><img src="new-service-request/images/new-sr-1.png" alt="New Service Request" /></p>
+<p>The date the Service Request is opened may trigger a change in available options for certain fields and/or differing local data questions based on the service year.</p>
+<p>The initial screen in creating a new Service Request asks for the following information.</p>
+<p><img src="new-service-request/images/new-sr-2.png" alt="New Service Request" /></p>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="new-service-request\index.html#admonition-note"></a>
+</div>
+<div>
+<p>Eligibility, Service Request Type and Funding Source options maybe include local data and differ from what is shown.</p>
+</div>
+</div>
+<p>Additional screens will allow you to enter additional information.  Some information will be imported from the client record and this can be edited for accuracy.  Additional fields maybe be required to complete a service request and selected options may need to fall within certain parameters, as determined by your agency. Omissions and errors will be indicated via red “Warnings Found”.</p>
+<p><img src="new-service-request/images/new-sr-3.png" alt="New Service Request" /></p>
+<p>Select “Finish” to save the Service Request.  The Service Request can be displayed in Summary or Detail View. Use the drop-down list in the “Actions” menu to switch to the preferred view.</p>
+<p>Fields within a Service Request Detail view can be edited by clicking on the response and making edits.</p>
+<p><img src="new-service-request/images/new-sr-4.png" alt="New Service Request" /></p>
+<p><img src="new-service-request/images/new-sr-5.png" alt="New Service Request" /></p>
+<p><img src="new-service-request/images/new-sr-6.png" alt="New Service Request" /></p>
+<p><img src="new-service-request/images/new-sr-7.png" alt="New Service Request" /></p>
+<p>You have the ability to the add notes or creates notes via Actions &gt; Tasks</p>
+<p><img src="new-service-request/images/new-sr-8.png" alt="New Service Request" /></p>
+<p>And/or clicking on the field in the Service Request View</p>
+<p><img src="new-service-request/images/new-sr-9.png" alt="New Service Request" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="link-service-request-to-projects"><a class="header" href="#link-service-request-to-projects">Link Service Request to Projects</a></h1>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="new-service-request/link-project.html#admonition-note"></a>
+</div>
+<div>
+<p>You must first have the Project ID for the Project you want to link to the Service Request.</p>
+</div>
+</div>
+<ol>
+<li>
+<p>From the Actions/Tasks drop down on the Service Request view, choose Display Project Associations.</p>
+</li>
+<li>
+<p>From the Actions/Tasks drop down menu on the Display Project Associations view, choose New Project Association.</p>
+</li>
+<li>
+<p>Enter the Project ID for the Project you want to link to the Service Request, then click Check Project ID.</p>
+</li>
+<li>
+<p>If the correct Project name appears, click Save. If it is not the correct Project name, click Cancel and check that you have the correct Project ID then repeat steps 1 through 4</p>
+</li>
+</ol>
+<p>You may also add a Project Association by clicking on the link in the Service Request View.</p>
+<p><strong>Sample View</strong>:</p>
+<p><img src="new-service-request/images/link-project.png" alt="Link project" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="close-a-service-request"><a class="header" href="#close-a-service-request">Close a Service Request</a></h1>
+<p>There are three steps that must be complete before a Project is closed in DAD:</p>
+<p>Step 1: Choose Prepare Project for Closings from Actions menu.</p>
+<p>Step 2: Enter a proposed close date, then click “Save &amp; Answer Closing Data</p>
+<p><img src="new-service-request/close-sr/images/close-sr-1.png" alt="Close SR" /></p>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="new-service-request/close-sr\index.html#admonition-note"></a>
+</div>
+<div>
+<p>If the Service Request has been closed then re-opened, or if you have prepared the Service Request for closure and did not receive approval until a later date, you MUST edit the proposed closed date to the date you are actually closing it.</p>
+</div>
+</div>
+<p>Step 3: Complete the required Fields (including required local data fields)</p>
+<p><img src="new-service-request/close-sr/images/close-sr-2.png" alt="Close SR" /></p>
+<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="new-service-request/close-sr\index.html#admonition-tip"></a>
+</div>
+<div>
+<p>You MUST match the Service Type and the Intervention Strategy. They need to match the level of service provided</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="projects"><a class="header" href="#projects">Projects</a></h1>
+<p>Projects are used to document efforts such as monitoring facilities, education and outreach activities, systems advocacy, and investigations involving a group of people. Projects can also be used to document administrative activities and time.</p>
+<p>Service Requests can have only one Funding Source and one Priority and Objective to record the agency’s advocacy efforts. If the agency needs to use multiple funding sources to document one advocacy effort, multiple Service Requests must be created to
+accommodate for each funding source.</p>
+<p>Projects can have multiple Priority and Objectives and multiple Funding Sources. If multiple Funding Sources are selected the Funding Source distribution in percent must total 100%.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="project-search"><a class="header" href="#project-search">Project Search</a></h1>
+<p>Basic Project Search allows you to search for Projects that have been created in DAD with many options to search by. It can be accessed on your Desktop if you choose to display it in User Preferences. It can also be accessed under “Tasks” in the “Actions” drop-down menu when in Desktop or Project view.</p>
+<p>Advanced Project Search can be accessed when in DAD Desktop or Project views under “Tasks” in the “Actions” drop-down menu.  It has a few more options for search criteria.</p>
+<p><strong>Sample View</strong>:</p>
+<p><img src="projects/images/project-search.png" alt="Project search" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="project-view"><a class="header" href="#project-view">Project View</a></h1>
+<p>The Project View displays information about the Project, assigned employees, Project contacts, and associated Service Requests. You can see your choice of all, or the last 5, the last 10, or the last 15 notes written about that Project. You also can see your choice of all, or the last 5, the last 10, or the last 15 Record Time entries for that Project.</p>
+<p>You can access the Project View four ways:</p>
+<ol>
+<li>
+<p>By choosing a specific Project from the list on your Desktop</p>
+</li>
+<li>
+<p>By left clicking the Project link from any DAD window (which takes you to the last Project you viewed)</p>
+</li>
+<li>
+<p>By choosing Display Primary, Associated, Team, or Agency Projects from the Desktop Actions dropdown.</p>
+</li>
+<li>
+<p>By choosing Basic or Advanced Project search from the Desktop Tasks dropdown</p>
+</li>
+</ol>
+<p>You have the following options under the “Actions” drop-down menu when in the Projects view:</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="views-3"><a class="header" href="#views-3">Views</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Feature Description</th></tr></thead><tbody>
+<tr><td>Print View</td><td>Displays all of the information entered in the Project</td></tr>
+<tr><td>Display Project Summary</td><td>Displays limited information about the Project</td></tr>
+<tr><td>Display Project Detail</td><td>Displays detailed information about the Project</td></tr>
+<tr><td>Display Project Fund Splits</td><td>Displays the Fund Splits for recording time in the Project</td></tr>
+<tr><td>Display Project Notes</td><td>Displays all, or the last 5, 10, or 15 notes for the Project</td></tr>
+<tr><td>Display Project Contacts</td><td>Displays all contacts connected to the Project</td></tr>
+<tr><td>Display Project Employees</td><td>Displays all employees connected to the Project (whether primary or associated)</td></tr>
+<tr><td>Display Project Time</td><td>Displays all, or the last 5, 10, or 15 Record Time entries recorded for the Project</td></tr>
+<tr><td>Display Project Security</td><td>Displays the DAD security groups with permission to view the Project</td></tr>
+<tr><td>Display Project Publications</td><td>Displays all Publications that have been recorded in the Project</td></tr>
+<tr><td>Display Service Request Associations</td><td>Displays open, closed, or all Associated Service Requests connected to the Project</td></tr>
+<tr><td>Display Project Associations</td><td>Displays all, open, or closed Associated Projects connected to the Project</td></tr>
+<tr><td>Display Primary Projects</td><td>Displays all, open, or closed Primary Projects assigned to the user depending on which option you choose from the drop down menu</td></tr>
+<tr><td>Display Associated Projects</td><td>Displays all, open, or closed Associated Projects assigned to the user depending on which option you choose from the drop down menu</td></tr>
+<tr><td>Display Team Projects</td><td>Displays open, closed, or all Team Projects for teams which the user is assigned to depending on which option you choose from the drop-down menu</td></tr>
+<tr><td>Display Agency Projects</td><td>Displays open, closed, or all Agency Projects depending on which option you choose from the drop-down menu</td></tr>
+</tbody></table>
+</div><div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="projects/view/views.html#admonition-note"></a>
+</div>
+<div>
+<p>When displaying Primary, Associated, Team, or Agency Projects, the last choice you make in the available drop down menu (all, open, or closed) is what will appear each time you are on your Desktop until you choose another option.</p>
+</div>
+</div>
+<p><strong>Sample View</strong>:</p>
+<p><img src="projects/view/images/views-table.png" alt="Views table" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tasks-3"><a class="header" href="#tasks-3">Tasks</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>Options</th><th>Feature Description</th></tr></thead><tbody>
+<tr><td>Edit Project</td><td>Enables you to edit many of the Project information fields such as the Project Name or Objective</td></tr>
+<tr><td>Edit Date Opened</td><td>Enables you to edit the date in which the Project was opened</td></tr>
+<tr><td>Edit Reference Date</td><td>Enables you to edit the reference date* for the Project</td></tr>
+<tr><td>Edit Project Type</td><td>Enables you to edit the DAD Project Type</td></tr>
+<tr><td>Edit Funding Sources</td><td>Enables you to edit the Funding Sources for the Project</td></tr>
+<tr><td>Edit Priorities/Objectives</td><td>Enables you to edit the Priorities and/or Objectives for the Project</td></tr>
+<tr><td>Edit Teams</td><td>Enables you to edit the Teams assigned to the Project</td></tr>
+<tr><td>Edit Project Request Local Data</td><td>Enables you to edit fields set up locally</td></tr>
+<tr><td>Edit Issues/Barriers Addressed</td><td>Enables you to edit the Issues/Barriers chosen for the Project (if any)</td></tr>
+<tr><td>Edit Dissemination Activities</td><td>Enables you to edit how information was disseminated</td></tr>
+<tr><td>Create New Project Note</td><td>Enables you to create a new Note for the Project</td></tr>
+<tr><td>Create New Project Contact</td><td>Enables you to add a new Contact for the Project</td></tr>
+<tr><td>Record Project Time</td><td>Enables you to Record Time you spend working on the Project</td></tr>
+<tr><td>Prepare Project for Closing</td><td>Guides you through the process for closing a Project by completing the required fields</td></tr>
+<tr><td>Create New Project</td><td>Allows you to create a new Project</td></tr>
+<tr><td>Create New Project Associated with Current Project</td><td>Allows you to create a new Project and associate it with the current Project</td></tr>
+<tr><td>Copy Project</td><td>Allows you to create a new Project and copies all details for the current project</td></tr>
+<tr><td>Delete Project</td><td>Enables you to delete a Project</td></tr>
+<tr><td>Basic Project Search</td><td>See previous Desktop Actions section</td></tr>
+<tr><td>Advanced Project Search</td><td>See previous Desktop Actions section</td></tr>
+<tr><td>Print</td><td>Allows you to print the current screen</td></tr>
+</tbody></table>
+</div><div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="projects/view/tasks.html#admonition-note"></a>
+</div>
+<div>
+<p>The <strong>Reference Date</strong> is the date the Project was originally created. DAD fields will be limited to the options available on that date. In order to have the current DAD fields and options, the reference date must be edited to the current date.</p>
+</div>
+</div>
+<div id="admonition-note-1" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-1-title">
+<div class="admonition-title">
+<div id="admonition-note-1-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="projects/view/tasks.html#admonition-note-1"></a>
+</div>
+<div>
+<p>You may not have all of these options depending on your DAD security level.</p>
+</div>
+</div>
+<p><strong>Sample View</strong>:</p>
+<p><img src="projects/view/images/tasks-table.png" alt="Tasks table" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="new-project"><a class="header" href="#new-project">New Project</a></h1>
+<p>Step 1: Open Date</p>
+<p><img src="projects/new-project/images/new-prj-1.png" alt="New Project" /></p>
+<p>Step 2: Select Project Type</p>
+<p><img src="projects/new-project/images/new-prj-2.png" alt="New Project" /></p>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="projects/new-project\index.html#admonition-note"></a>
+</div>
+<div>
+<p>Additional Project Types may appear based on agencies settings.</p>
+</div>
+</div>
+<p>Step 3: Select funding sources for Project</p>
+<p><img src="projects/new-project/images/new-prj-3.png" alt="New Project" /></p>
+<div id="admonition-note-1" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-1-title">
+<div class="admonition-title">
+<div id="admonition-note-1-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="projects/new-project\index.html#admonition-note-1"></a>
+</div>
+<div>
+<p>Additional Project Types may appear based on agencies settings.</p>
+</div>
+</div>
+<p>Step 4:  Define Project Fund Distribution</p>
+<p><img src="projects/new-project/images/new-prj-4.png" alt="New Project" /></p>
+<div id="admonition-note-2" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-2-title">
+<div class="admonition-title">
+<div id="admonition-note-2-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="projects/new-project\index.html#admonition-note-2"></a>
+</div>
+<div>
+<p>Project funding can be distributed across multiple projects, but the total distribution must equal 100%</p>
+</div>
+</div>
+<p>Step 5: Establish Project Priorities and Objectives</p>
+<p><img src="projects/new-project/images/new-prj-5.png" alt="New Project" /></p>
+<div id="admonition-note-3" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-3-title">
+<div class="admonition-title">
+<div id="admonition-note-3-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="projects/new-project\index.html#admonition-note-3"></a>
+</div>
+<div>
+<p>Projects may be connected to more than one priorities / objectives</p>
+</div>
+</div>
+<p>Step 6: Project Information</p>
+<p><img src="projects/new-project/images/new-prj-6.png" alt="New Project" /></p>
+<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="projects/new-project\index.html#admonition-tip"></a>
+</div>
+<div>
+<p>Date of Occurrence - reference first date of project. Select “Finish” on the final screen to save the Project.  This can be displayed in Summary or Detail View. Use the drop-down list in the “Actions” menu to switch to the preferred view.</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="project-detail-view"><a class="header" href="#project-detail-view">Project Detail View</a></h1>
+<p><img src="projects/images/project-detail-1.png" alt="Project detail" /></p>
+<p><img src="projects/images/project-detail-2.png" alt="Project detail" /></p>
+<p><img src="projects/images/project-detail-3.png" alt="Project detail" /></p>
+<p><img src="projects/images/project-detail-4.png" alt="Project detail" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="collaborators"><a class="header" href="#collaborators">Collaborators</a></h1>
+<p>Unique to Projects is the ability to associate projects with and identify project Collaborators.</p>
+<p><img src="projects/images/collaborators.png" alt="Collaborators" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="close-a-project"><a class="header" href="#close-a-project">Close a Project</a></h1>
+<p>There are three steps that must be complete before a Project is closed in DAD:</p>
+<p>Step 1: Choose Prepare Project for Closings from Actions menu.</p>
+<p>Step 2: Enter a proposed close date, then click “Save &amp; Answer Closing Data</p>
+<p><img src="projects/images/close-project-1.png" alt="Close project" /></p>
+<p>Step 3: Answer all of the closing questions</p>
+<p><img src="projects/images/close-project-2.png" alt="Close project" /></p>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="projects/close-project.html#admonition-note"></a>
+</div>
+<div>
+<p>Note: Different project types will have different questions. Once you have answered all of the questions, click “Save &amp; Validate for closing” button.</p>
+</div>
+</div>
+<p><img src="projects/images/close-project-3.png" alt="Close project" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="notes"><a class="header" href="#notes">Notes</a></h1>
+<p>DAD lets you create, edit, and delete notes about Clients, Service Requests, and Projects.</p>
+<p>All notes contain the same basic types of information:</p>
+<div class="table-wrapper"><table><thead><tr><th>Field</th><th>Field Description</th></tr></thead><tbody>
+<tr><td>Date of Note</td><td>When the note was created</td></tr>
+<tr><td>Category</td><td>An optional field for the category in which a note may be applicable</td></tr>
+<tr><td>Subject</td><td>A descriptive title for the note. This title displays in summary views, so choose something that makes it easy for you find the note later.</td></tr>
+<tr><td>Note</td><td>The content of your note or the information you wanted to record.</td></tr>
+</tbody></table>
+</div>
+<p><img src="notes/images/notes-1.png" alt="Notes" /></p>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="notes\index.html#admonition-note"></a>
+</div>
+<div>
+<p>Categories can be added at any time based on need.</p>
+</div>
+</div>
+<p><img src="notes/images/notes-2.png" alt="Notes" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="edit-notes"><a class="header" href="#edit-notes">Edit Notes</a></h1>
+<p>Notes are displayed on the Client, Service Request, and Project summary and detail views. You can choose to view all, or the last 5, 10, or 15 notes related to the <strong>Client</strong>, <strong>Service Request</strong>, or <strong>Project</strong>.</p>
+<p>From any Client, Service Request, and Project summary and detail view, you can select <strong>Display Notes</strong> from the <strong>Action Menu</strong> and then decide to display all, or the last 5, 10, 15 notes related to the Client, Service Request, or Project.</p>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="notes/edit.html#admonition-note"></a>
+</div>
+<div>
+<p>You can also see all of the notes from the Print View screen</p>
+</div>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="appendix-b-time-keeping"><a class="header" href="#appendix-b-time-keeping">Appendix B: Time Keeping</a></h1>
+<p>Time can be recorded to either a Service Request or a Project. DAD is developed so that all daily activities are recorded in DAD daily so that an electronic timesheet can be formulated that directly ties the funding source billable amounts to specific advocacy efforts for audit purposes.</p>
+<p>DAD supports tracking time spent working on specific Client Service Requests and Projects.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="displayingchecking-time"><a class="header" href="#displayingchecking-time">Displaying/Checking Time</a></h1>
+<p>Daily time for the current date displayed on your Desktop through the User Preferences function. (see previous <a href="https://dadbooktest.nyuu.page/display/index.html">User Preferences</a> section for more information)</p>
+<p><img src="appendix-timekeeping/images/displaying-time-1.png" alt="Displaying time" /></p>
+<p>Display Time from the Desktop Actions menu.</p>
+<p><img src="appendix-timekeeping/images/displaying-time-2.png" alt="Displaying time" /></p>
+<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="appendix-timekeeping/display.html#admonition-tip"></a>
+</div>
+<div>
+<p><em>Once selected there Display Options (drop down) of “Time for Current Date”, “Time in the Last 7 Days”, “Time in the Last 14 Days”, “Time in the Last 30 Days”, “Time this Month”, “Time last Month”, or “Time Between”.</em></p>
+<p>Display time entries by selecting Display Service Request Time or Display Project Time from the Actions menu on a specific Service Request or Project Screen</p>
+<p>Service Request</p>
+<p><img src="appendix-timekeeping/images/display-tip-1.png" alt="Displaying time tip" /></p>
+<p>Project</p>
+<p><img src="appendix-timekeeping/images/display-tip-2.png" alt="Displaying time tip" /></p>
+<p><img src="appendix-timekeeping/images/display-tip-3.png" alt="Displaying time tip" /></p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="project-time"><a class="header" href="#project-time">Project Time</a></h1>
+<p><img src="appendix-timekeeping/images/project-time.png" alt="Project time" /></p>
+<p>Steps</p>
+<ol>
+<li>
+<p>On the top of desktop click TIME</p>
+</li>
+<li>
+<p>Choose the timekeeper type</p>
+</li>
+<li>
+<p>Enter date of time entry</p>
+</li>
+<li>
+<p>Choose project type</p>
+</li>
+<li>
+<p>Choose project</p>
+</li>
+<li>
+<p>Choose action</p>
+</li>
+<li>
+<p>Enter your time</p>
+</li>
+<li>
+<p>Enter notes</p>
+</li>
+<li>
+<p>Click save</p>
+</li>
+<li>
+<p>You will then be given the same screen to continue recording your time OR you may go to the actions drop down menu and select employee time report or timesheets</p>
+</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="recording-service-request-time"><a class="header" href="#recording-service-request-time">Recording Service Request Time</a></h1>
+<ol>
+<li>
+<p>On the desktop search for the client by name or client id OR if you know the service request id number you can search for that in the basic service request ID search located on the desktop</p>
+</li>
+<li>
+<p>Click search</p>
+</li>
+<li>
+<p>Locate client (The search result display 10 clients per page)</p>
+</li>
+<li>
+<p>Click select next to client name</p>
+</li>
+<li>
+<p>Scroll down to all service requests</p>
+</li>
+<li>
+<p>Locate the correct service request</p>
+</li>
+<li>
+<p>Click display on the right hand side of the screen</p>
+</li>
+</ol>
+<p><img src="appendix-timekeeping/images/sr-time-1.png" alt="SR time" /></p>
+<ol start="8">
+<li>
+<p>On the actions drop down menu find record service request time</p>
+</li>
+<li>
+<p>Click Go</p>
+</li>
+</ol>
+<p><img src="appendix-timekeeping/images/sr-time-2.png" alt="SR time" /></p>
+<ol start="10">
+<li>
+<p>Choose the action that best describes what you did in this service request</p>
+</li>
+<li>
+<p>Change the date if necessary</p>
+</li>
+<li>
+<p>Enter your time</p>
+</li>
+<li>
+<p>Enter notes</p>
+</li>
+<li>
+<p>Click save</p>
+</li>
+</ol>
+<p><img src="appendix-timekeeping/images/sr-time-3.png" alt="SR time" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="clocking-in-and-out-for-non-exempt-employees"><a class="header" href="#clocking-in-and-out-for-non-exempt-employees">Clocking In and Out for Non-Exempt Employees</a></h1>
+<p>Once a Non-Exempt Employee has logged into the DAD application and from the Desktop view select the Time main menu option, selecting the dropdown Action option “Clock In/Out”</p>
+<ol>
+<li>
+<p>Select the date</p>
+</li>
+<li>
+<p>Clock in (remember to choose AM or PM)</p>
+</li>
+<li>
+<p>Clock Out (remember to choose AM or PM)</p>
+</li>
+</ol>
+<p><img src="appendix-timekeeping/images/clocking.png" alt="Clocking" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-to-enter-leave-time"><a class="header" href="#how-to-enter-leave-time">How to Enter Leave Time</a></h1>
+<ol>
+<li>
+<p>Go to the time view from your DAD desktop or any other view</p>
+<ul>
+<li>
+<p>The timekeeper type is Leave</p>
+<p><img src="appendix-timekeeping/images/entering-leave-1.png" alt="Entering leave" /></p>
+</li>
+<li>
+<p>The time entry for is set to your name</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Enter the date for the time you are entering. The current date will be the default. The drop down provides you a calendar or you can type in the date (month/day/4 digit year)</p>
+<ul>
+<li>To the right of the date you will see the time you have in DAD for the date you choose</li>
+</ul>
+</li>
+<li>
+<p>Choose the applicable leave type from the drop down menu</p>
+<ul>
+<li>
+<p>Paid (default)</p>
+</li>
+<li>
+<p>Unpaid Leave</p>
+<p><img src="appendix-timekeeping/images/entering-leave-2.png" alt="Entering leave" /></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Choose the Leave you are using from the drop down menu</p>
+<ul>
+<li>
+<p>If you choose Paid Leave, you have the option of holiday (default), sick, vacation, or other leave</p>
+<p><img src="appendix-timekeeping/images/entering-leave-3.png" alt="Entering leave" /></p>
+</li>
+<li>
+<p>If you chose unpaid Leave as the leave type, the leave will default to unpaid leave</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Enter the amount of time</p>
+</li>
+<li>
+<p>Enter a note</p>
+</li>
+<li>
+<p>Click save to save your entry or cancel to not save your entry</p>
+</li>
+</ol>
+<p>Sample:</p>
+<p><img src="appendix-timekeeping/images/entering-leave-4.png" alt="Entering leave" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="electronic-timesheets"><a class="header" href="#electronic-timesheets">Electronic Timesheets</a></h1>
+<p>Once an Employee has logged into the DAD application and from the Desktop view select the Time main menu option, selecting the dropdown Action option “Display My Timesheets” will start the submission of recorded time entries to a supervisor process:</p>
+<p><img src="appendix-timekeeping/images/entering-time-1.png" alt="Entering time" /></p>
+<p>From the Display My Timesheets view, Employees will select “Add New Timesheet”:</p>
+<p><img src="appendix-timekeeping/images/entering-time-2.png" alt="Entering time" />
+ 
+Employees will then be prompted to specify a start and end date for the timesheet to be submitted and upon selection of dates, select next:</p>
+<p><img src="appendix-timekeeping/images/entering-time-3.png" alt="Entering time" /></p>
+<p>The Timesheet will then be displayed based on the dates selected and the Employee will select either Next to continue or Previous to edit the dates:</p>
+<p><img src="appendix-timekeeping/images/entering-time-4.png" alt="Entering time" /></p>
+<p><img src="appendix-timekeeping/images/entering-time-5.png" alt="Entering time" /></p>
+<p>Upon selecting next, the Employee will be prompted to submit any notes to the Supervisor that has been specified to review submitted timesheets for the employee and to select Submit Timesheet.  These notes will be included in the email notification to the Supervisor and will be included with the final timesheet as well (this feature will be added, currently notes are only included within the email notices).</p>
+<p><img src="appendix-timekeeping/images/entering-time-6.png" alt="Entering time" /></p>
+<p>The submitted timesheet will display with the grid of the Display My Timesheets view and time records made during that time period will be locked and no additional entries will be allowed during that time period.</p>
+<p><img src="appendix-timekeeping/images/entering-time-7.png" alt="Entering time" /></p>
+<p>Once the employee, designated as Supervisor for the Employee record that submits a timesheet, approves the timesheet, an email notification with any notes will be sent to the Employee and the Accounting Employee assigned to the Employee.  At that point the dates and employee that approves the timesheet will be updated.  This will repeat once the timesheet is approved for processing by the assigned accounting employee.  If at any review level by the supervisor or the accounting employee the timesheet is found to need edits, the email notification will be returned to the employee and the status will change from Submitted to Returned and the Employee will have the ability to edit time records during the time period of that time sheet and then select Edit from the Display My Timesheets view and resubmit the timesheet to be reviewed again.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="workflows"><a class="header" href="#workflows">Workflows</a></h1>
+<div id="admonition-abstract" class="admonition admonish-abstract" role="note" aria-labelledby="admonition-abstract-title">
+<div class="admonition-title">
+<div id="admonition-abstract-title">
+<p>Abstract</p>
+</div>
+<a class="admonition-anchor-link" href="workflows\index.html#admonition-abstract"></a>
+</div>
+<div>
+<p>Current DAD documentation's biggest weakness is the lack of "demonstrate doing a task from start to finish" sorts of material. So, let's fix that.</p>
+</div>
+</div>
+<div id="admonition-warning" class="admonition admonish-warning" role="note" aria-labelledby="admonition-warning-title">
+<div class="admonition-title">
+<div id="admonition-warning-title">
+<p>Warning</p>
+</div>
+<a class="admonition-anchor-link" href="workflows\index.html#admonition-warning"></a>
+</div>
+<div>
+<p>This section is a work in progress.</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="i-am-a-dad-admin-and-i-want-to-reset-a-users-2fa"><a class="header" href="#i-am-a-dad-admin-and-i-want-to-reset-a-users-2fa">I am a DAD Admin and I want to reset a user's 2FA</a></h1>
+<p>Some DAD 2FA problems are best resolved by resetting the user's 2FA settings and then having them set up the authenticator again. A local DAD administrator must do the resetting. Pretty much all 2FA issues can be resolved by doing this.</p>
+<p>Here is how to reset their 2fa settings:</p>
+<ol>
+<li>log in on an account with admin powers</li>
+</ol>
+<p><img src="workflows/reset-2fa/images/reset-2fa-1.png" alt="The DAD landing page on an admin account" /></p>
+<ol start="2">
+<li>go to Open Administration</li>
+</ol>
+<p><img src="workflows/reset-2fa/images/reset-2fa-2.png" alt="The DAD administration landing page" /></p>
+<ol start="3">
+<li>open the employees dropdown</li>
+</ol>
+<p><img src="workflows/reset-2fa/images/reset-2fa-3.png" alt="The DAD administration landing page with the employees dropdown open!" /></p>
+<ol start="4">
+<li>then go to the Employees page...</li>
+</ol>
+<p>You should be at a table listing all the users. The last column of this table, Reset 2fa, has a reset button for each user.</p>
+<ol start="5">
+<li>...and reset the settings for the user</li>
+</ol>
+<p>Click the user's button, then click "ok" when asked to confirm</p>
+<p><img src="workflows/reset-2fa/images/reset-2fa-4.png" alt="Caption!" /></p>
+<p>You're all done! Now the user should try to log in again, and this time they'll be shown the 2FA setup screen.</p>
+<div style="break-before: page; page-break-before: always;"></div><div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div class="admonition-title">
+<div id="admonition-info-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="misc/developers.html#admonition-info"></a>
+</div>
+<div>
+<p>This section isn't part of the DAD guide! This section is about how to make this website! If you're here to learn about using DAD: you can skip this page and you won't have missed anything.</p>
+</div>
+</div>
+<p>The <em>information</em> is a mashup of Zach's DAD guide "Version 2.2 - 2018" and Milo's DAD 2FA guide. This is a living document; the content is being improved regularly.</p>
+<p>Milo makes the using the process he describes <a href="https://github.com/nyuutsu/dad-guide#readme">here</a>.</p>
+<p>If you think being able to make websites like this would be valuable for your P&amp;A, feel free to reach out (<a href="misc/MAILTO:milo.nygren-cassels@ndrn.org">milo.nygren-cassels@ndrn.org</a>).</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>
